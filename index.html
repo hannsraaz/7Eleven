@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>7Eleven · Everyday, elevated.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @media print {
+        body > *:not(#receipt-dialog),
+        #receipt-dialog > *:not(#receipt) {
+          display: none !important;
+        }
+        #receipt-dialog[open] {
+          position: static;
+          margin: 0;
+          width: 100%;
+          max-width: none;
+          border: 0;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-white font-sans text-zinc-950 antialiased">
+    <header
+      class="sticky top-0 z-20 flex flex-wrap items-center gap-4 border-b border-zinc-200 bg-white/85 px-5 py-4 backdrop-blur-xl md:px-[7%]"
+    >
+      <a class="mr-auto text-2xl font-extrabold tracking-tight" href="#home">
+        7eleven<sup class="text-[10px]">®</sup>
+      </a>
+      <nav
+        class="order-3 flex w-full justify-center gap-5 text-sm md:order-none md:w-auto md:gap-8"
+        aria-label="Main"
+      >
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#categories">Categories</a>
+        <a href="#about">About</a>
+      </nav>
+      <button
+        id="search-button"
+        class="rounded-full border border-zinc-200 px-4 py-2 hover:bg-zinc-100"
+        aria-label="Search products"
+      >
+        ⌕
+      </button>
+      <button id="bag" class="rounded-full bg-zinc-950 px-4 py-2 text-white">
+        Bag <span id="count" class="ml-1 rounded-full bg-white px-1.5 text-zinc-950">0</span>
+      </button>
+    </header>
+    <main>
+      <section id="home" class="bg-zinc-100 px-6 py-16 text-center md:px-[7%]">
+        <p class="text-[11px] font-bold tracking-[.18em] text-zinc-500">MEET YOUR NEXT EVERYDAY ESSENTIAL</p>
+        <h1 class="my-6 text-5xl font-semibold tracking-[-.07em] md:text-8xl">
+          Less ordinary.<br />More possibility.
+        </h1>
+        <p class="text-zinc-500">
+          Beautiful technology. Thoughtfully chosen.<br />Discover a better way to work, listen, and live.
+        </p>
+        <a class="mt-6 inline-block rounded-full bg-zinc-950 px-6 py-3 text-sm text-white" href="#products">
+          Explore the collection ↗
+        </a>
+        <img
+          class="mx-auto mt-8 h-64 max-w-full object-contain md:h-[350px]"
+          src="assets/images/hero-iphone.png"
+          alt="Dark red iPhone shown sideways against metallic Pro lettering"
+          width="1200"
+          height="630"
+        />
+        <small class="text-[9px] tracking-[.18em]">THE ONE COLLECTION · DESIGNED FOR YOUR EVERYDAY</small>
+      </section>
+      <section id="categories" class="mx-auto max-w-7xl px-6 py-16 md:px-12">
+        <p class="text-[11px] font-bold tracking-[.18em] text-zinc-500">FIND YOUR EVERYDAY</p>
+        <h2 class="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">A world of possibilities.</h2>
+        <div id="category-buttons" class="mt-7 flex flex-wrap gap-3"></div>
+      </section>
+      <section id="products" class="mx-auto max-w-7xl px-6 py-12 md:px-12">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-[11px] font-bold tracking-[.18em] text-zinc-500">THE COLLECTION</p>
+            <h2 class="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+              Great things. Within reach.
+            </h2>
+          </div>
+          <button id="reset" class="rounded-full border border-zinc-300 px-4 py-2 text-sm">View all</button>
+        </div>
+        <div class="mt-7 flex flex-wrap gap-4">
+          <label class="grid gap-1 text-sm">
+            Search
+            <input
+              id="search"
+              class="rounded-xl border border-zinc-300 bg-zinc-50 p-3"
+              type="search"
+              placeholder="Find your next favorite"
+            />
+          </label>
+          <label class="grid gap-1 text-sm">
+            Sort
+            <select id="sort" class="rounded-xl border border-zinc-300 bg-zinc-50 p-3">
+              <option value="featured">Featured</option>
+              <option value="low">Price: low to high</option>
+              <option value="high">Price: high to low</option>
+            </select>
+          </label>
+        </div>
+        <p class="mt-5 text-sm text-zinc-500">Prices are for the classroom demo.</p>
+        <p id="results" class="mt-1 text-sm text-zinc-500" role="status"></p>
+        <div id="catalogue" class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </section>
+      <section id="about" class="bg-zinc-100 px-6 py-20 text-center md:px-[20%]">
+        <p class="text-[11px] font-bold tracking-[.18em] text-zinc-500">THE 7ELEVEN WAY</p>
+        <h2 class="mt-3 text-4xl font-semibold tracking-tight md:text-5xl">
+          Good design.<br />Made for real life.
+        </h2>
+        <p class="mx-auto mt-5 max-w-xl text-zinc-500">
+          We believe the best technology fits naturally into your day. Our demo collection brings together
+          considered design, useful features, and room for possibility.
+        </p>
+      </section>
+      <section class="mx-auto max-w-7xl px-6 py-16 md:px-12">
+        <div class="flex items-center justify-between">
+          <h2 class="text-4xl font-semibold tracking-tight">Your orders.</h2>
+          <button id="history-button" class="rounded-full border border-zinc-300 px-4 py-2 text-sm">
+            Refresh history
+          </button>
+        </div>
+        <div id="history" class="mt-6 flex flex-wrap gap-3"></div>
+      </section>
+    </main>
+    <footer class="border-t border-zinc-200 px-6 py-10 text-sm text-zinc-600 md:px-[7%]">
+      <a class="text-2xl font-extrabold tracking-tight text-zinc-950" href="#home">7eleven®</a>
+      <p>Everyday, elevated. An original college concept store.</p>
+      <a href="mailto:hello@example.com">Contact: hello@example.com</a>
+      <p>
+        <a href="#products">Products</a> · <a href="#about">About</a> · <a href="#categories">Categories</a>
+      </p>
+      <small>© 2026 7Eleven. All payments are simulated.</small>
+    </footer>
+    <dialog
+      id="cart-dialog"
+      class="m-0 ml-auto h-dvh w-full max-w-md rounded-l-3xl border-0 p-7 shadow-2xl backdrop:bg-black/40"
+    >
+      <button class="float-right text-sm text-zinc-500" data-close>Close ×</button>
+      <h2 class="text-3xl font-semibold">Your bag.</h2>
+      <div id="cart-items" class="mt-5"></div>
+      <div id="totals" class="mt-5 border-t border-zinc-200 pt-3"></div>
+      <button
+        id="checkout"
+        class="mt-3 w-full rounded-full bg-zinc-950 px-5 py-3 text-white disabled:opacity-40"
+      >
+        Continue to checkout
+      </button>
+    </dialog>
+    <dialog
+      id="checkout-dialog"
+      class="w-[min(560px,94vw)] rounded-3xl border-0 p-7 shadow-2xl backdrop:bg-black/40"
+    >
+      <button class="float-right text-sm text-zinc-500" data-close>Close ×</button>
+      <h2 class="text-3xl font-semibold">The final step.</h2>
+      <p class="text-sm text-zinc-500">Demo payments only. No banking credentials required.</p>
+      <form id="checkout-form" class="mt-4 grid gap-3">
+        <label class="grid gap-1 text-sm">
+          Name
+          <input
+            class="rounded-xl border border-zinc-300 p-3"
+            name="name"
+            required
+            minlength="2"
+          />
+        </label>
+        <label class="grid gap-1 text-sm">
+          Email
+          <input
+            class="rounded-xl border border-zinc-300 p-3"
+            name="email"
+            type="email"
+            required
+          />
+        </label>
+        <label class="grid gap-1 text-sm">
+          Delivery address
+          <textarea
+            class="rounded-xl border border-zinc-300 p-3"
+            name="address"
+            required
+            minlength="10"
+          ></textarea>
+        </label>
+        <label class="grid gap-1 text-sm">
+          Payment method
+          <select class="rounded-xl border border-zinc-300 p-3" name="method">
+            <option value="upi">Simulated UPI</option>
+            <option value="card">Simulated card</option>
+          </select>
+        </label>
+        <p class="text-xs text-zinc-500">Invoice details are saved in this browser.</p>
+        <div id="summary"></div>
+        <button class="rounded-full bg-zinc-950 px-5 py-3 text-white">Simulate payment</button>
+      </form>
+    </dialog>
+    <dialog
+      id="receipt-dialog"
+      aria-labelledby="invoice-title"
+      class="w-[min(700px,94vw)] rounded-3xl border-0 p-7 shadow-2xl backdrop:bg-black/40"
+    >
+      <button class="float-right text-sm text-zinc-500" data-close>Close ×</button>
+      <article id="receipt">
+        <header class="flex clear-both justify-between border-b-2 border-zinc-950 py-3">
+          <div>
+            <strong>7eleven</strong>
+            <h2 id="invoice-title" class="text-3xl font-semibold">Digital invoice</h2>
+          </div>
+          <span id="invoice-status" class="h-fit rounded-full bg-emerald-50 px-3 py-1 text-xs"></span>
+        </header>
+        <div class="grid gap-5 py-6 text-sm sm:grid-cols-2">
+          <div>
+            <h3 class="font-semibold">Bill to / Deliver to</h3>
+            <strong id="invoice-name"></strong>
+            <div id="invoice-email"></div>
+            <address id="invoice-address" class="whitespace-pre-wrap not-italic"></address>
+          </div>
+          <dl class="grid h-fit grid-cols-[auto_1fr] gap-x-4">
+            <dt class="text-zinc-500">Transaction ID</dt>
+            <dd id="invoice-id"></dd>
+            <dt class="text-zinc-500">Issued</dt>
+            <dd id="invoice-date"></dd>
+            <dt class="text-zinc-500">Payment method</dt>
+            <dd id="invoice-method"></dd>
+          </dl>
+        </div>
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-zinc-300 text-right">
+              <th class="py-2 text-left">Item</th>
+              <th>Qty</th>
+              <th>Unit price</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="invoice-items"></tbody>
+        </table>
+        <dl class="ml-auto mt-5 grid w-fit grid-cols-2 gap-x-8 gap-y-1 text-right">
+          <dt>Subtotal</dt>
+          <dd id="invoice-subtotal"></dd>
+          <dt>Demo tax (18%)</dt>
+          <dd id="invoice-tax"></dd>
+          <dt class="font-bold">Order total</dt>
+          <dd id="invoice-total" class="font-bold"></dd>
+        </dl>
+        <p class="mt-5 text-xs text-zinc-500">Classroom simulation. No money was charged.</p>
+      </article>
+      <button id="download" class="mt-5 rounded-full bg-zinc-950 px-5 py-3 text-white">
+        Print / Save as PDF
+      </button>
+    </dialog>
+    <p
+      id="status"
+      class="fixed bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full bg-zinc-950 px-5 py-3 text-sm text-white empty:hidden"
+      role="status"
+    ></p>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
